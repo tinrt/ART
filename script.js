@@ -3,6 +3,15 @@ const startBtn = document.getElementById("start");
 const openSound = document.getElementById("openSound");
 
 startBtn.addEventListener("click", () => {
+  openSound.volume = 0;
+  openSound.play().then(() => {
+    openSound.pause();
+    openSound.currentTime = 0;
+    openSound.volume = 0.4;
+  }).catch((e) => {
+    console.warn("Audio play blocked by browser:", e);
+  });
+
   instruction.innerText = "Close your eyes.";
   startBtn.style.display = "none";
 
@@ -21,7 +30,6 @@ startBtn.addEventListener("click", () => {
 
         setTimeout(() => {
           instruction.innerHTML += "<br><br><em>You may open your eyes now.</em>";
-          openSound.volume = 0.4;
           openSound.play();
 
           const returnBtn = document.createElement("button");
@@ -32,7 +40,10 @@ startBtn.addEventListener("click", () => {
           const responses = [
             "The sender thanks you.",
             "A new string is now attached.",
-            "You have been seen."
+            "You have been seen.",
+            "The tug was real.",
+            "The loop is closed. For now.",
+            "The string has vanished."
           ];
 
           returnBtn.addEventListener("click", () => {
@@ -41,8 +52,7 @@ startBtn.addEventListener("click", () => {
 
             setTimeout(() => {
               instruction.classList.add("fade-out");
-            }, 3000); 
-
+            }, 6000); 
             returnBtn.remove();
           });
 
